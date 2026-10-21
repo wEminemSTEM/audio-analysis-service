@@ -6,6 +6,7 @@ Later (week 1-2) it can also report whether the database is reachable.
 
 from fastapi import APIRouter
 from pydantic import BaseModel
+
 from app.core.config import get_settings
 
 router = APIRouter(tags=["health"])
