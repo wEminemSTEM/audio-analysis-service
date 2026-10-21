@@ -1,18 +1,21 @@
-from app.core.config import get_settings
 import pytest
 
+from app.core.config import get_settings
 
-@pytest.fixture(autouse=True)
+
+@pytest.fixture
 def set_test_environment(monkeypatch):
     get_settings.cache_clear()
-    monkeypatch.setenv("environment", "test")
+    monkeypatch.setenv("ENVIRONMENT", "test")
+    yield
+    get_settings.cache_clear()
 
 
 def test_health_returns_ok(client):
     response = client.get("/health")
 
     assert response.status_code == 200
-    assert response.json() == {"status": "ok", "environment": "local"}
+    assert response.json() == {"status": "ok", "environment": "test"}
 
 
 def test_openapi_docs_available(client):
