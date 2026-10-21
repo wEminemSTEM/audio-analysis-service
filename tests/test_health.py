@@ -11,7 +11,7 @@ def set_test_environment(monkeypatch):
     get_settings.cache_clear()
 
 
-def test_health_returns_ok(client):
+def test_health_returns_ok(set_test_environment, client):
     response = client.get("/health")
 
     assert response.status_code == 200
